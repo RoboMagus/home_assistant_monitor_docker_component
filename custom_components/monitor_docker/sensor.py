@@ -328,6 +328,14 @@ class DockerContainerSensor(Entity):
         self._attributes = {}
         self._removed = False
 
+        self._attr_device_info = DeviceInfo(
+            identifiers={(DOMAIN, instance, cname)},
+            manufacturer="monitor_docker",
+            model="monitor_docker",
+            name="monitor_docker",
+            sw_version=VERSION
+        )
+
         _LOGGER.info(
             "[%s] %s: Initializing sensor with parameter: %s",
             self._instance,

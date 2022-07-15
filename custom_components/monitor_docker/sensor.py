@@ -190,12 +190,12 @@ class DockerSensor(Entity):
         self._entity_id = ENTITY_ID_FORMAT.format(
             slugify(self._prefix + "_" + self._var_name)
         )
-        self.unique_id = self._entity_id
         self._name = f"{self._prefix} {self._var_name}"
 
         self._state = None
         self._attributes = {}
         self._removed = False
+        self._attr_unique_id = self._entity_id
 
         _LOGGER.info(
             "[%s]: Initializing Docker sensor '%s'", self._instance, self._var_id
@@ -323,12 +323,12 @@ class DockerContainerSensor(Entity):
                 name=alias, sensorname=self._var_name, sensor=self._var_name
             )
 
-        self.unique_id = self._entity_id
         self._state = None
         self._state_extra = None
 
         self._attributes = {}
         self._removed = False
+        self._attr_unique_id = self._entity_id
 
         _LOGGER.info(
             "[%s] %s: Initializing sensor with parameter: %s",

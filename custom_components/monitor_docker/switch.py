@@ -157,6 +157,7 @@ class DockerContainerSwitch(SwitchEntity):
         self._entity_id = ENTITY_ID_FORMAT.format(
             slugify(self._prefix + "_" + self._cname)
         )
+        self.unique_id = self._entity_id
         self._name = name_format.format(name=alias)
         self._removed = False
 

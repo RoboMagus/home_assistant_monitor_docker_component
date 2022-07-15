@@ -190,7 +190,8 @@ class DockerSensor(Entity):
         self._entity_id = ENTITY_ID_FORMAT.format(
             slugify(self._prefix + "_" + self._var_name)
         )
-        self._name = "{name} {sensor}".format(name=self._prefix, sensor=self._var_name)
+        self.unique_id = self._entity_id
+        self._name = f"{self._prefix} {self._var_name}"
 
         self._state = None
         self._attributes = {}
@@ -322,6 +323,7 @@ class DockerContainerSensor(Entity):
                 name=alias, sensorname=self._var_name, sensor=self._var_name
             )
 
+        self.unique_id = self._entity_id
         self._state = None
         self._state_extra = None
 

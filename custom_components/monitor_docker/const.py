@@ -1,6 +1,7 @@
 """Define constants for the Monitor Docker component."""
 
 DOMAIN = "monitor_docker"
+VERSION = "1.15"
 API = "api"
 CONFIG = "config"
 CONTAINER = "container"

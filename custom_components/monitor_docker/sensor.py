@@ -11,6 +11,7 @@ from homeassistant.util import slugify
 
 from .const import (
     DOMAIN,
+    VERSION,
     API,
     ATTR_MEMORY_LIMIT,
     ATTR_ONLINE_CPUS,

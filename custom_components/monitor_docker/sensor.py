@@ -4,6 +4,7 @@ import asyncio
 import logging
 import re
 from datetime import datetime
+from fnmatch import translate
 from typing import Any
 
 from homeassistant.components.sensor import (
@@ -78,6 +79,19 @@ async def async_setup_platform(
     if config[CONF_PREFIX]:
         prefix = config[CONF_PREFIX]
 
+    # Combine list of container names and globs into single regex
+    cn_exclude_regex = None
+    if config[CONF_CONTAINERS_EXCLUDE]:
+        translated_patterns = []
+        for glob in config[CONF_CONTAINERS_EXCLUDE]:
+            if pattern := translate(glob):
+                translated_patterns.append(pattern)
+
+        if translated_patterns:
+            inner = "|".join(translated_patterns)
+            combined = f"(?:{inner})"
+            cn_exclude_regex = re.compile(combined)
+
     _LOGGER.debug("[%s]: Setting up sensor(s)", instance)
 
     sensors = []
@@ -110,7 +124,7 @@ async def async_setup_platform(
         if cname in config[CONF_CONTAINERS] or not config[CONF_CONTAINERS]:
             includeContainer = True
 
-        if config[CONF_CONTAINERS_EXCLUDE] and cname in config[CONF_CONTAINERS_EXCLUDE]:
+        if cn_exclude_regex and cn_exclude_regex.match(cname):
             includeContainer = False
 
         if includeContainer:
